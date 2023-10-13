@@ -2,7 +2,7 @@ DROP PROCEDURE IF EXISTS AddValidBooking;
 
 DELIMITER //
 
-CREATE PROCEDURE AddValidBooking(IN bookingDate DATE, IN tableNumber INT, OUT message VARCHAR(255))
+CREATE PROCEDURE AddValidBooking(IN Date DATE, IN TableNumber INT, OUT message VARCHAR(255))
 BEGIN
   DECLARE existingBooking INT;
 
@@ -10,12 +10,12 @@ BEGIN
 
   SELECT COUNT(*)
   INTO existingBooking
-  FROM Booking
-  WHERE BookingSlot = bookingDate AND TableNo = tableNumber;
+  FROM Bookings
+  WHERE Date = booking_date AND TableNumber = table_number;
 
   IF existingBooking = 0 THEN
-    INSERT INTO Booking (BookingSlot, TableNo)
-    VALUES (bookingDate, tableNumber);
+    INSERT INTO Booking (Date, TableNumber)
+    VALUES (booking_date, table_number);
     SET message = 'Booking successful.';
   ELSE
     SET message = 'Booking declined. The table is already booked on the specified date.';
